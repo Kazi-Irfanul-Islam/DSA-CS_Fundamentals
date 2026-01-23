@@ -1,0 +1,7 @@
+{
+  "C++ Set Template": {
+    "prefix": "setll",
+    "body": ["std::set<ll> $1;"],
+    "description": "C++ set with customizable type (default: ll)",
+  },
+}
