@@ -14,6 +14,49 @@ public:
     }
 };
 
+// insertion before head
+Node* insertBeforeHead(Node* head, int x) {
+    Node* newHead = new Node(x, head, nullptr);
+    head->back = newHead;
+    return newHead;    
+}
+
+// insertion before tail
+Node* insertBeforeTail(Node* head, int x) {
+    if(head->next == NULL) return insertBeforeHead(head, x);
+
+    Node* tail = head;
+    while(tail->next != NULL) {
+        tail = tail->next;
+    }
+
+    Node* prev = tail->back;
+    Node* newNode = new Node(x, tail, prev);    
+    prev->next = newNode;
+    tail->back = newNode;
+    return head;
+}
+
+// insert before kth element
+Node* insertBeforeKth(Node* head, int x, int k) {
+    if(k == 1) return insertBeforeHead(head, x);
+    
+    Node* temp = head;
+    int cnt = 0;
+    while(temp != NULL) {
+        cnt++;
+        if(cnt == k) break;
+        temp = temp->next;
+    }
+
+    Node* prev = temp->back;
+    Node* newNode = new Node(x, temp, prev);
+
+    prev->next = newNode;
+    temp->back = newNode;
+    return head;
+}
+
 // delete head of the DLL
 Node* deleteHead(Node* head) {
     if(head == nullptr or head->next == nullptr) {
@@ -94,7 +137,7 @@ void deleteNode(Node* node) {
 
     prev->next = front;
     front->back = prev;
-
+    
     node->next = nullptr;
     node->back = nullptr;
     delete node;
@@ -136,10 +179,16 @@ void freeList(Node* head) {
 int main() {
     vector<int> v = {69, 1, 2, 3, 4, 5, 6, 7};
     Node* head = convertAraayToDLL(v);
+    // Insertion
+    // head = insertBeforeHead(head, 100);
+    // head = insertBeforeTail(head, 47);
+    head = insertBeforeKth(head, 100, 3);
+
+    // Deletion
     // head = deleteHead(head);
     // head = deleteTail(head);
     // head = removeKthElement(head, 1);
-    deleteNode(head->next);
+    // deleteNode(head->next);
     print(head);
     // freeList(head);
 }
